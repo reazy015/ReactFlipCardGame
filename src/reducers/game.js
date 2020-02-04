@@ -1,5 +1,5 @@
 import {INIT_GAME, SET_GRID_CELL_TO_COMPARE, CLEAR_GRID_CELL_TO_COMPARE, SET_GRID_EMPTY_CELLS} from '../actionTypes';
-import {splice2DArray} from '../utils/arraySplice2D';
+import {splice2DArray} from '../utils/utilFunctions';
 const initialState = {
     grid: [],
     cellsToCompare: []

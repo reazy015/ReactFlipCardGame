@@ -1,5 +1,3 @@
-export const SET_NAME = 'SET_NAME';
-export const DELETE_NAME = 'DELETE_NAME';
 export const INIT_GAME = 'INIT_GAME';
 export const SET_GRID_CELL_TO_COMPARE = 'SET_GRID_CELL';
 export const CLEAR_GRID_CELL_TO_COMPARE = 'CLEAR_GRID_CELL_TO_COMPARE';
