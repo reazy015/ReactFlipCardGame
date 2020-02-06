@@ -16,7 +16,12 @@ const CardCellComponent = ({cellCoords, display, setGridCell, image, id}) => {
     };
 
     if(display) {
-        return <div onClick={onClickHandle} style={{width: 100, height: 100, backgroundImage: `url(${image})`}} />;
+        return (
+            <div onClick={onClickHandle} className={opened ? 'card is-flipped' : 'card'} style={{width: 100, height: 100}}>
+                <div className='back' style={{backgroundImage: `url(${image})`}} />
+                <div className='front' />
+            </div>
+        );
 
     } else {
         return <div style={{width: 100, height: 100}}>Solved</div>;

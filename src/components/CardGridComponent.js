@@ -16,7 +16,7 @@ const CardGridComponent = ({grid, cellsToCompare, clearCellsToCompare, setEmptyC
 
     if(grid.length) {
         return (
-            <div className='grid-wrapper' style={{maxWidth: dimension * 100, visibility: 'hidden'}}>
+            <div className='grid-wrapper' style={{maxWidth: dimension * 100}}>
                 {grid.map((row, rowIndex) => row.map((col, colIndex) =>
                     (<CardCellComponent
                         key={`${col.id}${colIndex}`}
