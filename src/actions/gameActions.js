@@ -23,7 +23,7 @@ export const initGrid = (rows, cols) => dispatch => {
 };
 
 export const setGridCell = (idToCompare) => dispatch => {
-    console.log(idToCompare);
+    // console.log(idToCompare);
     dispatch({
         type: SET_GRID_CELL_TO_COMPARE,
         payload: {

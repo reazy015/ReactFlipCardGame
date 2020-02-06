@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {setGridCell} from '../actions/gameActions';
 
-const CardCellComponent = ({cellCoords, display, setGridCell, image, id}) => {
+const CardCellComponent = ({display, setGridCell, image, id}) => {
     const [opened, setOpened] = useState(false);
 
     const onClickHandle = () => {
@@ -15,16 +15,20 @@ const CardCellComponent = ({cellCoords, display, setGridCell, image, id}) => {
         setOpened(!opened);
     };
 
+    const clearOpenedState = () => {
+        setOpened(false);
+    };
+
     if(display) {
         return (
-            <div onClick={onClickHandle} className={opened ? 'card is-flipped' : 'card'} style={{width: 100, height: 100}}>
+            <div onClick={() => onClickHandle(id)} className={opened ? 'card is-flipped' : 'card'} style={{width: 100, height: 100}}>
                 <div className='back' style={{backgroundImage: `url(${image})`}} />
                 <div className='front' />
             </div>
         );
 
     } else {
-        return <div style={{width: 100, height: 100}}>Solved</div>;
+        return <div style={{width: 100, height: 100}} className='card'>Solved</div>;
     }
 };
 
