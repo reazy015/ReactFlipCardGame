@@ -1,34 +1,41 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {initGrid, clearCellsToCompare, setEmptyCellsToGrid} from '../actions/gameActions';
 import CardCellComponent from './CardCellComponent';
 
-const CardGridComponent = ({grid, cellsToCompare, initGrid, rows, cols, clearCellsToCompare, setEmptyCellsToGrid}) => {
-    useEffect(() => {
-        initGrid(rows, cols);
-    }, []);
+const CardGridComponent = ({grid, cellsToCompare, clearCellsToCompare, setEmptyCellsToGrid, dimensionSet, dimension}) => {
 
     if (cellsToCompare.length === 2) {
-        if (cellsToCompare[0][1] === cellsToCompare[1][1]) {
+        if (cellsToCompare[0] === cellsToCompare[1]) {
             setEmptyCellsToGrid(cellsToCompare);
             clearCellsToCompare();
         } else {
             clearCellsToCompare();
         }
     }
-    // console.log(grid);
-    return (
-        <div className='grid-wrapper' style={{maxWidth: rows * 100}}>
-            {grid.length && grid.map((row, rowIndex) => row.map((col, colIndex) =>
-                (<CardCellComponent key={`${rowIndex},${colIndex}`} cellCoords={[rowIndex, colIndex]} display={col}/>)))}
-        </div>
-    );
+
+    if(grid.length) {
+        return (
+            <div className='grid-wrapper' style={{maxWidth: dimension * 100, visibility: 'hidden'}}>
+                {grid.map((row, rowIndex) => row.map((col, colIndex) =>
+                    (<CardCellComponent
+                        key={`${col.id}${colIndex}`}
+                        id={col.id}
+                        display={col}
+                        image={col.image}
+                    />)))}
+            </div>
+        );
+    }
+
+    return null;
 };
 
 const mapStateToProps = state => ({
     grid: state.game.grid,
     cellsToCompare: state.game.cellsToCompare,
-    state: state.game
+    dimensionSet: state.game.dimensionSet,
+    dimension: state.game.dimension
 });
 
 export default connect(mapStateToProps, {initGrid, clearCellsToCompare, setEmptyCellsToGrid})(CardGridComponent);

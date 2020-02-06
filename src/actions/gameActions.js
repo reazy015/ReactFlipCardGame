@@ -1,32 +1,33 @@
-import {INIT_GAME, SET_GRID_CELL_TO_COMPARE, SET_GRID_EMPTY_CELLS, CLEAR_GRID_CELL_TO_COMPARE} from '../actionTypes';
-import {getNoNRepeatingRandomNumbersArray} from '../utils/utilFunctions';
-import axios from 'axios';
+import {INIT_GAME, SET_GRID_CELL_TO_COMPARE, SET_GRID_EMPTY_CELLS, CLEAR_GRID_CELL_TO_COMPARE, SET_GAME_GRID_DIMENSION} from '../actionTypes';
+import {getNoNRepeatingRandomNumbersArray, getArrayFilledWithRandomImages} from '../utils/utilFunctions';
 
 export const initGrid = (rows, cols) => dispatch => {
-    const requestNumber = getNoNRepeatingRandomNumbersArray(8);
-    console.log(requestNumber);
-    try {
-        requestNumber.forEach(number => {
-            axios.get(`https://i.picsum.photos/id/${number}/100/100.jpg`)
-                .then((data) => console.log(data));
-        })
-    } catch (e) {
-        console.log(e.message);
-    }
+    const requestNumber = getNoNRepeatingRandomNumbersArray((rows * cols) / 2);
+    const randomImagesArray = [];
+
+    requestNumber.forEach(number => {
+        randomImagesArray.push({
+            id: number,
+            src: `https://i.picsum.photos/id/${number}/100/100.jpg`
+        });
+    });
+
+    const gridArray = getArrayFilledWithRandomImages(randomImagesArray, new Array(rows).fill(new Array(cols).fill(true)));
+
     dispatch({
         type: INIT_GAME,
         payload: {
-            grid: new Array(rows).fill(new Array(cols).fill(true))
+            grid: gridArray
         }
     })
 };
 
-export const setGridCell = (cellsToCompare, value) => dispatch => {
+export const setGridCell = (idToCompare) => dispatch => {
+    console.log(idToCompare);
     dispatch({
         type: SET_GRID_CELL_TO_COMPARE,
         payload: {
-            cellsToCompare,
-            value
+            idToCompare
         }
     });
 };
@@ -38,11 +39,20 @@ export const clearCellsToCompare = () => dispatch => {
     });
 };
 
-export const setEmptyCellsToGrid = (cellsCoords, value) => dispatch => {
+export const setEmptyCellsToGrid = (idToRemove) => dispatch => {
     dispatch({
         type: SET_GRID_EMPTY_CELLS,
         payload: {
-            cellsCoords
+            idToRemove
         }
-    })
+    });
+};
+
+export const setGameGridDimension = (number) => dispatch => {
+    dispatch({
+        type: SET_GAME_GRID_DIMENSION,
+        payload: {
+            dimension: number
+        }
+    });
 };
